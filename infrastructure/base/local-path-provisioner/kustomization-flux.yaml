@@ -1,0 +1,26 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: local-path-provisioner
+  namespace: flux-system
+spec:
+  interval: 1h
+  sourceRef:
+    kind: GitRepository
+    name: local-path-provisioner
+  path: ./deploy
+  prune: true
+  wait: true
+  timeout: 5m
+  patches:
+    - target:
+        kind: StorageClass
+        name: local-path
+      patch: |
+        apiVersion: storage.k8s.io/v1
+        kind: StorageClass
+        metadata:
+          name: local-path
+          annotations:
+            storageclass.kubernetes.io/is-default-class: "true"
+        reclaimPolicy: Retain
