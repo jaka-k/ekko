@@ -1,0 +1,40 @@
+.env
+
+# ── Secrets ────────────────────────────────────────────────────────────────
+# Plain-text secrets never belong in a GitOps repo. Commit only encrypted
+# versions (e.g. SOPS *.enc.yaml / *.sops.yaml, or SealedSecrets).
+.env.*
+!.env.example
+*.key
+*.pem
+*.crt
+*.agekey
+age.key
+*.dec.yaml
+*.decrypted.yaml
+*-secret.yaml.dec
+.decrypted~*
+
+# Kubeconfigs and Flux/SSH deploy keys
+kubeconfig
+*.kubeconfig
+identity
+identity.pub
+known_hosts
+
+# ── Local build / render output ────────────────────────────────────────────
+# Output of `kubectl kustomize`, `flux build`, `helm template` when saved to disk
+/build/
+/out/
+/rendered/
+*.rendered.yaml
+
+# Helm chart downloads (Flux pulls charts in-cluster, they never need to be in Git)
+charts/*.tgz
+*.tgz
+
+# ── Editors / OS ───────────────────────────────────────────────────────────
+.DS_Store
+.vscode/
+*.swp
+*~
